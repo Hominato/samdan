@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="OnChain Wallet — Secure, non-custodial Ethereum wallet with real-time portfolio tracking and on-chain transaction management." />
+  <meta name="theme-color" content="#0f1117" />
+  <title>OnChain Wallet — Secure Crypto Dashboard</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- Ethers.js v6 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.9.0/ethers.umd.min.js"></script>
+
+  <!-- App Styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ==============================
+       LOGIN SCREEN
+  ============================== -->
+  <div id="login-screen" class="screen active">
+    <div class="login-bg">
+      <div class="login-orb orb-1"></div>
+      <div class="login-orb orb-2"></div>
+      <div class="login-orb orb-3"></div>
+      <div class="grid-overlay"></div>
+    </div>
+
+    <div class="login-container">
+      <div class="login-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-hexagon-nodes"></i>
+        </div>
+        <span class="brand-name">OnChain</span>
+      </div>
+
+      <div class="login-card glass-card">
+        <div class="login-header">
+          <h1>Welcome back</h1>
+          <p>Sign in to your wallet dashboard</p>
+        </div>
+
+        <div id="login-alert" class="alert hidden" role="alert" aria-live="polite"></div>
+
+        <form id="login-form" novalidate autocomplete="on">
+          <div class="form-group">
+            <label for="login-identifier">Email or Username</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-user input-icon"></i>
+              <input type="text" id="login-identifier" name="username" autocomplete="username"
+                placeholder="Username or Email" required aria-describedby="identifier-error" />
+            </div>
+            <span id="identifier-error" class="field-error hidden" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="login-password" name="password" autocomplete="current-password"
+                placeholder="••••••••••••" required aria-describedby="password-error" />
+              <button type="button" class="toggle-password" id="toggle-pwd" aria-label="Toggle password visibility">
+                <i class="fa-solid fa-eye" id="pwd-eye-icon"></i>
+              </button>
+            </div>
+            <span id="password-error" class="field-error hidden" role="alert"></span>
+          </div>
+
+          <div class="form-row">
+            <label class="checkbox-label">
+              <input type="checkbox" id="remember-me" name="remember" />
+              <span class="checkmark"></span>
+              Remember me
+            </label>
+            <a href="#" class="forgot-link" id="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full" id="login-btn">
+            <span class="btn-text">Sign In</span>
+            <span class="btn-loader hidden"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+          </button>
+        </form>
+
+        <div class="login-divider">
+          <span>or continue with</span>
+        </div>
+
+        <button class="btn btn-metamask" id="metamask-login-btn">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask" width="22"
+            height="22" />
+          Connect MetaMask
+        </button>
+
+        <p class="login-footer">
+
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================
+       MAIN APP SCREEN
+  ============================== -->
+  <div id="app-screen" class="screen hidden">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-hexagon-nodes"></i>
+        </div>
+        <span class="brand-name">OnChain</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" data-page="wallet" id="nav-wallet">
+          <i class="fa-solid fa-wallet"></i>
+          <span>Wallet</span>
+        </a>
+        <a href="#" class="nav-item" data-page="send" id="nav-send">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Send</span>
+        </a>
+        <a href="#" class="nav-item" data-page="receive" id="nav-receive">
+          <i class="fa-solid fa-qrcode"></i>
+          <span>Receive</span>
+        </a>
+        <a href="#" class="nav-item" data-page="history" id="nav-history">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>History</span>
+        </a>
+        <a href="#" class="nav-item" data-page="settings" id="nav-settings">
+          <i class="fa-solid fa-gear"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="network-badge" id="network-badge">
+          <span class="network-dot"></span>
+          <span id="network-name">Ethereum Mainnet</span>
+        </div>
+        <button class="btn-logout" id="logout-btn" aria-label="Sign out">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+      <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="mobile-brand">
+        <i class="fa-solid fa-hexagon-nodes"></i>
+        OnChain
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="theme-toggle-mobile" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon" id="theme-icon-mobile"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+
+      <!-- Top Bar -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <h2 class="page-title" id="page-title">Dashboard</h2>
+          <div class="breadcrumb" id="breadcrumb">Overview</div>
+        </div>
+        <div class="topbar-right">
+          <div class="session-timer" id="session-timer" title="Session expires in">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span id="timer-display">30:00</span>
+          </div>
+          <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+            <i class="fa-solid fa-moon" id="theme-icon"></i>
+          </button>
+          <div class="user-avatar" id="user-avatar-btn" title="Steven Carpenter">
+            <span>SC</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ——— DASHBOARD PAGE ——— -->
+      <section class="page active" id="page-dashboard">
+
+        <!-- Welcome Banner + Ticker -->
+        <div class="welcome-banner">
+          <div class="welcome-text">
+            Good day, <strong>Steven</strong> 👋 — Here's your portfolio snapshot.
+          </div>
+          <div class="ticker-strip" id="ticker-strip" aria-label="Live crypto prices">
+            <div class="ticker-track" id="ticker-track">
+              <!-- Populated by JS (doubled for infinite scroll) -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Portfolio Hero -->
+        <div class="portfolio-hero glass-card">
+          <div class="portfolio-info">
+            <p class="portfolio-label">Total Portfolio Value</p>
+            <h2 class="portfolio-value" id="portfolio-value">$2,500,000.00</h2>
+            <div class="portfolio-change positive" id="portfolio-change">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+              <span>+$62,500.00 (2.54%) today</span>
+            </div>
+          </div>
+          <div class="portfolio-actions">
+            <button class="btn btn-primary" id="dash-send-btn">
+              <i class="fa-solid fa-paper-plane"></i> Send
+            </button>
+            <button class="btn btn-outline" id="dash-receive-btn">
+              <i class="fa-solid fa-qrcode"></i> Receive
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-grid">
+          <div class="stat-card glass-card" id="stat-eth">
+            <div class="stat-icon eth"><i class="fa-brands fa-ethereum"></i></div>
+            <div class="stat-body">
+              <p class="stat-label">Ethereum</p>
+              <p class="stat-value" id="eth-balance">0.00 ETH</p>
+              <p class="stat-sub neutral">+0.00%</p>
+            </div>
+          </div>
+          <div class="stat-card glass-card" id="stat-btc">
+            <div class="stat-icon btc"><i class="fa-brands fa-bitcoin"></i></div>
+            <div class="stat-body">
+              <p class="stat-label">Bitcoin</p>
+              <p class="stat-value">37.98 BTC</p>
+              <p class="stat-sub positive">+1.87%</p>
+            </div>
+          </div>
+          <div class="stat-card glass-card" id="stat-usdc">
+            <div class="stat-icon usdc"><i class="fa-solid fa-dollar-sign"></i></div>
+            <div class="stat-body">
+              <p class="stat-label">USDC</p>
+              <p class="stat-value">0 USDC</p>
+              <p class="stat-sub neutral">+0.00%</p>
+            </div>
+          </div>
+          <div class="stat-card glass-card" id="stat-gas">
+            <div class="stat-icon gas"><i class="fa-solid fa-fire-flame-curved"></i></div>
+            <div class="stat-body">
+              <p class="stat-label">Gas Price</p>
+              <p class="stat-value" id="gas-price">-- Gwei</p>
+              <p class="stat-sub" id="gas-label">Fetching…</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="charts-row">
+          <div class="chart-card glass-card">
+            <div class="card-header">
+              <h3>Portfolio Performance</h3>
+              <div class="chart-tabs">
+                <button class="chart-tab active" data-range="7d">7D</button>
+                <button class="chart-tab" data-range="30d">30D</button>
+                <button class="chart-tab" data-range="90d">90D</button>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="performance-chart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card glass-card">
+            <div class="card-header">
+              <h3>Asset Allocation</h3>
+            </div>
+            <div class="chart-wrap donut-wrap">
+              <canvas id="allocation-chart"></canvas>
+            </div>
+            <div class="allocation-legend" id="allocation-legend"></div>
+          </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h3>Recent Transactions</h3>
+            <button class="btn btn-ghost btn-sm" id="view-all-txns">View All <i
+                class="fa-solid fa-arrow-right"></i></button>
+          </div>
+          <div class="tx-list" id="dashboard-tx-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ——— WALLET PAGE ——— -->
+      <section class="page hidden" id="page-wallet">
+        <div class="glass-card wallet-card">
+          <div class="wallet-header">
+            <div>
+              <h3>Wallet Address</h3>
+              <div class="wallet-address-row">
+                <code class="wallet-address" id="wallet-address-display">Not connected</code>
+                <button class="icon-btn" id="copy-address-btn" title="Copy address">
+                  <i class="fa-solid fa-copy"></i>
+                </button>
+              </div>
+            </div>
+            <div class="wallet-btns">
+              <button class="btn btn-primary btn-sm" id="connect-metamask-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="" width="18" />
+                Connect MetaMask
+              </button>
+              <button class="btn btn-outline btn-sm" id="import-wallet-btn">
+                <i class="fa-solid fa-file-import"></i> Import Wallet
+              </button>
+              <button class="btn btn-ghost btn-sm" id="generate-wallet-btn">
+                <i class="fa-solid fa-plus"></i> Generate New
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Import Wallet Modal Inline -->
+        <div class="glass-card hidden" id="import-wallet-panel">
+          <div class="card-header">
+            <h3><i class="fa-solid fa-key"></i> Import Wallet via Seed Phrase</h3>
+            <button class="icon-btn" id="close-import-panel"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="seed-warning">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Never share your seed phrase. Anyone with it has full access to your wallet.
+          </div>
+          <div class="form-group">
+            <label for="seed-phrase-input">Seed Phrase (12 or 24 words)</label>
+            <textarea id="seed-phrase-input" rows="3"
+              placeholder="word1 word2 word3 word4 word5 word6 word7 word8 word9 word10 word11 word12"
+              autocomplete="off" spellcheck="false"></textarea>
+          </div>
+          <button class="btn btn-primary" id="import-confirm-btn">
+            <i class="fa-solid fa-file-import"></i> Import Wallet
+          </button>
+          <div id="import-result" class="hidden"></div>
+        </div>
+
+        <!-- Generated wallet details -->
+        <div class="glass-card hidden" id="generated-wallet-panel">
+          <div class="card-header">
+            <h3><i class="fa-solid fa-circle-check" style="color:var(--success)"></i> New Wallet Generated</h3>
+            <button class="icon-btn" id="close-generated-panel"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="seed-warning danger">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Write down your seed phrase and store it offline. This is shown only once.
+          </div>
+          <div class="form-group">
+            <label>Seed Phrase</label>
+            <div class="seed-grid" id="generated-seed-grid"></div>
+            <button class="btn btn-ghost btn-sm mt-8" id="copy-seed-btn"><i class="fa-solid fa-copy"></i> Copy
+              Seed</button>
+          </div>
+          <div class="form-group">
+            <label>Wallet Address</label>
+            <code class="wallet-address-block" id="generated-address"></code>
+          </div>
+          <div class="form-group">
+            <label>Private Key <span class="badge badge-danger">Keep Secret</span></label>
+            <div class="input-wrapper">
+              <input type="password" id="generated-pk" readonly />
+              <button type="button" class="toggle-password" id="toggle-pk">
+                <i class="fa-solid fa-eye" id="pk-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Token balances -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h3>Token Balances</h3>
+            <button class="btn btn-ghost btn-sm" id="refresh-balances-btn">
+              <i class="fa-solid fa-rotate"></i> Refresh
+            </button>
+          </div>
+          <div class="token-list" id="token-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ——— SEND PAGE ——— -->
+      <section class="page hidden" id="page-send">
+        <div class="glass-card send-card">
+          <div class="card-header">
+            <h3><i class="fa-solid fa-paper-plane"></i> Send Crypto</h3>
+          </div>
+
+          <div id="send-alert" class="alert hidden" role="alert" aria-live="polite"></div>
+
+          <form id="send-form" novalidate>
+            <div class="form-group">
+              <label for="send-token">Asset</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-coins input-icon"></i>
+                <select id="send-token" name="token">
+                  <option value="ETH">Ethereum (ETH)</option>
+                  <option value="BTC">Bitcoin (BTC)</option>
+                  <option value="USDC">USD Coin (USDC)</option>
+                  <option value="LINK">Chainlink (LINK)</option>
+                  <option value="UNI">Uniswap (UNI)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="send-to" id="send-to-label">Recipient Address</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-address-card input-icon"></i>
+                <input type="text" id="send-to" name="recipient" placeholder="0x..." autocomplete="off"
+                  spellcheck="false" aria-describedby="send-to-error" />
+              </div>
+              <span id="send-to-hint" style="font-size:0.75rem;color:var(--text-muted);display:block;margin-top:4px"></span>
+              <span id="send-to-error" class="field-error hidden" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <div class="label-row">
+                <label for="send-amount">Amount</label>
+                <button type="button" class="btn btn-ghost btn-xs" id="send-max-btn">Max</button>
+              </div>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-coins input-icon"></i>
+                <input type="number" id="send-amount" name="amount" placeholder="0.00" step="any" min="0"
+                  aria-describedby="send-amount-error" />
+              </div>
+              <span id="send-amount-error" class="field-error hidden" role="alert"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="send-activation-code">Activation Code</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-key input-icon"></i>
+                <input type="text" id="send-activation-code" name="activation-code" placeholder="Enter code" autocomplete="off"
+                  aria-describedby="send-activation-error" />
+              </div>
+              <span id="send-activation-error" class="field-error hidden" role="alert"></span>
+            </div>
+
+            <div class="gas-estimate-box glass-card" id="gas-box">
+              <div class="gas-row">
+                <span><i class="fa-solid fa-fire-flame-curved"></i> Estimated Gas Fee</span>
+                <span id="gas-fee-display">-- ETH</span>
+              </div>
+              <div class="gas-row">
+                <span><i class="fa-solid fa-file-invoice"></i> Activation Fee</span>
+                <span id="activation-fee-display">$3,000.00</span>
+              </div>
+              <div class="gas-row">
+                <span><i class="fa-solid fa-clock"></i> Estimated Time</span>
+                <span id="gas-time-display">~ 15 sec</span>
+              </div>
+              <div class="gas-row">
+                <span><i class="fa-solid fa-dollar-sign"></i> Total (USD)</span>
+                <strong id="gas-total-display">--</strong>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="send-btn">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span class="btn-text">Send Transaction</span>
+              <span class="btn-loader hidden"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Send Confirmation Modal -->
+        <div class="modal-overlay hidden" id="send-confirm-overlay">
+          <div class="modal glass-card" id="send-confirm-modal">
+            <div class="modal-header">
+              <h3>Confirm Transaction</h3>
+              <button class="icon-btn" id="close-send-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="confirm-details" id="confirm-details"></div>
+            <div class="modal-actions">
+              <button class="btn btn-outline" id="cancel-send-btn">Cancel</button>
+              <button class="btn btn-primary" id="confirm-send-btn">
+                <i class="fa-solid fa-check"></i> Confirm Send
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ——— RECEIVE PAGE ——— -->
+      <section class="page hidden" id="page-receive">
+        <div class="receive-grid">
+          <div class="glass-card receive-card">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-qrcode"></i> Receive Crypto</h3>
+            </div>
+            <div class="qr-container" id="qr-container">
+              <div id="qrcode-canvas"></div>
+            </div>
+            <div class="receive-address-wrap">
+              <p class="receive-label">Your Wallet Address</p>
+              <code class="receive-address" id="receive-address-display">Not connected</code>
+              <button class="btn btn-outline btn-sm" id="copy-receive-btn">
+                <i class="fa-solid fa-copy"></i> Copy Address
+              </button>
+            </div>
+          </div>
+
+          <div class="glass-card receive-info-card">
+            <h3>How to Receive</h3>
+            <div class="steps-list">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                  <strong>Share your address</strong>
+                  <p>Copy your wallet address or let the sender scan your QR code.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                  <strong>Sender initiates transfer</strong>
+                  <p>They send crypto from their wallet to your address.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                  <strong>Confirm on blockchain</strong>
+                  <p>The transaction is verified by the network (usually ~15 seconds).</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-text">
+                  <strong>Funds arrive</strong>
+                  <p>Your balance updates automatically after confirmation.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="network-selector">
+              <label for="receive-network">Network</label>
+              <select id="receive-network">
+                <option>Ethereum Mainnet</option>
+                <option>Polygon</option>
+                <option>Arbitrum One</option>
+                <option>Optimism</option>
+                <option>Base</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ——— HISTORY PAGE ——— -->
+      <section class="page hidden" id="page-history">
+        <div class="glass-card">
+          <div class="card-header">
+            <h3><i class="fa-solid fa-clock-rotate-left"></i> Transaction History</h3>
+            <div class="filter-row">
+              <select id="tx-filter-type" aria-label="Filter by type">
+                <option value="all">All Types</option>
+                <option value="send">Sent</option>
+                <option value="receive">Received</option>
+                <option value="swap">Swap</option>
+              </select>
+              <select id="tx-filter-asset" aria-label="Filter by asset">
+                <option value="all">All Assets</option>
+                <option value="ETH">ETH</option>
+                <option value="BTC">BTC</option>
+                <option value="USDC">USDC</option>
+              </select>
+            </div>
+          </div>
+          <div class="tx-list" id="full-tx-list">
+            <!-- Populated by JS -->
+          </div>
+          <div class="tx-pagination">
+            <button class="btn btn-ghost btn-sm" id="load-more-btn">Load More <i
+                class="fa-solid fa-chevron-down"></i></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ——— SETTINGS PAGE ——— -->
+      <section class="page hidden" id="page-settings">
+        <div class="settings-grid">
+          <div class="glass-card">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-circle-user"></i> Profile</h3>
+            </div>
+            <div class="profile-info">
+              <div class="profile-avatar">SC</div>
+              <div>
+                <p class="profile-name">Steven Carpenter</p>
+                <p class="profile-email">carpentersteven18@gmail.com</p>
+                <p class="profile-username">@carpentersteven18</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-palette"></i> Appearance</h3>
+            </div>
+            <div class="settings-item">
+              <div>
+                <strong>Theme</strong>
+                <p>Switch between dark and light mode</p>
+              </div>
+              <div class="theme-switcher">
+                <button class="theme-btn active" id="theme-dark-btn" data-theme="dark">
+                  <i class="fa-solid fa-moon"></i> Dark
+                </button>
+                <button class="theme-btn" id="theme-light-btn" data-theme="light">
+                  <i class="fa-solid fa-sun"></i> Light
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-shield-halved"></i> Security</h3>
+            </div>
+            <div class="settings-item">
+              <div>
+                <strong>Session Timeout</strong>
+                <p>Automatically sign out after inactivity</p>
+              </div>
+              <select id="timeout-select" class="setting-select">
+                <option value="30">30 minutes</option>
+                <option value="15">15 minutes</option>
+                <option value="60">1 hour</option>
+                <option value="5">5 minutes</option>
+              </select>
+            </div>
+            <div class="settings-item">
+              <div>
+                <strong>Two-Factor Authentication</strong>
+                <p>Add an extra layer of security</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="2fa-toggle" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="settings-item">
+              <div>
+                <strong>Transaction Confirmation</strong>
+                <p>Always confirm before sending</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="confirm-toggle" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-network-wired"></i> Network</h3>
+            </div>
+            <div class="settings-item">
+              <div>
+                <strong>Active Network</strong>
+                <p>Select your preferred blockchain network</p>
+              </div>
+              <select id="network-select" class="setting-select">
+                <option>Ethereum Mainnet</option>
+                <option>Polygon</option>
+                <option>Arbitrum One</option>
+                <option>Optimism</option>
+                <option>Base</option>
+                <option>Goerli Testnet</option>
+              </select>
+            </div>
+            <div class="settings-item">
+              <div>
+                <strong>RPC Endpoint</strong>
+                <p>Custom node URL</p>
+              </div>
+              <input type="url" id="rpc-input" class="setting-input" placeholder="https://mainnet.infura.io/v3/..." />
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==============================
+       TOAST NOTIFICATIONS
+  ============================== -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Sidebar overlay for mobile -->
+  <div class="sidebar-overlay hidden" id="sidebar-overlay"></div>
+
+  <!-- Scripts -->
+  <script src="auth.js"></script>
+  <script src="wallet.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
