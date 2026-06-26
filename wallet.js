@@ -531,21 +531,6 @@ const WalletModule = {
   /** Bind wallet page interactive buttons */
   _bindWalletButtons() {
 
-    /* ---- Generate new wallet ---- */
-    document.getElementById('generate-wallet-btn')?.addEventListener('click', async () => {
-      try {
-        const w = await generateNewWallet();
-        this._showGeneratedWallet(w);
-      } catch (err) {
-        window.AppModule?.showToast('Failed to generate wallet: ' + err.message, 'error');
-      }
-    });
-
-
-    document.getElementById('close-generated-panel')?.addEventListener('click', () => {
-      document.getElementById('generated-wallet-panel')?.classList.add('hidden');
-    });
-
     /* ---- Copy address ---- */
     document.getElementById('copy-address-btn')?.addEventListener('click', () => {
       const addr = WalletState.address;
@@ -565,25 +550,7 @@ const WalletModule = {
       }
     });
 
-    /* ---- Copy generated seed ---- */
-    document.getElementById('copy-seed-btn')?.addEventListener('click', () => {
-      const w = WalletState.generatedWallet;
-      if (w?.mnemonic?.phrase) {
-        navigator.clipboard.writeText(w.mnemonic.phrase).then(() =>
-          window.AppModule?.showToast('Seed phrase copied! Keep it safe.', 'warning')
-        );
-      }
-    });
 
-    /* ---- Toggle generated PK visibility ---- */
-    document.getElementById('toggle-pk')?.addEventListener('click', () => {
-      const input = document.getElementById('generated-pk');
-      const icon  = document.getElementById('pk-eye');
-      if (!input) return;
-      const show = input.type === 'password';
-      input.type = show ? 'text' : 'password';
-      if (icon) icon.className = show ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
-    });
 
 
 
@@ -600,33 +567,7 @@ const WalletModule = {
     });
   },
 
-  /** Display the generated wallet panel */
-  _showGeneratedWallet(w) {
-    const panel = document.getElementById('generated-wallet-panel');
-    if (!panel) return;
 
-    // Populate seed grid
-    const seedGrid = document.getElementById('generated-seed-grid');
-    if (seedGrid) {
-      seedGrid.innerHTML = '';
-      w.mnemonic.split(' ').forEach((word, i) => {
-        const el = document.createElement('div');
-        el.className = 'seed-word';
-        el.innerHTML = `<span class="num">${i + 1}.</span><span class="word">${AuthModule.sanitise(word)}</span>`;
-        seedGrid.appendChild(el);
-      });
-    }
-
-    const addrEl = document.getElementById('generated-address');
-    if (addrEl) addrEl.textContent = w.address;
-
-    const pkEl = document.getElementById('generated-pk');
-    if (pkEl) pkEl.value = w.privateKey;
-
-    setWalletAddress(w.address);
-
-    panel.classList.remove('hidden');
-  },
 };
 
 window.WalletModule = WalletModule;
