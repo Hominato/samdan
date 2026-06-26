@@ -74,6 +74,19 @@ const TOKEN_DATA = [
 /** Mock transaction history */
 const MOCK_TRANSACTIONS = [
   {
+    id:        'tx_000',
+    type:      'receive',
+    asset:     'BTC',
+    amount:    0.009115,
+    usd:       600.00,
+    from:      '0x9aB3…c4D5',
+    to:        DEMO_ADDRESS,
+    hash:      '0xabcdef1234567890',
+    timestamp: new Date('2026-06-25T14:30:00Z').getTime(),
+    status:    'confirmed',
+    gas:       0.0001,
+  },
+  {
     id:        'tx_001',
     type:      'receive',
     asset:     'ETH',
@@ -82,7 +95,7 @@ const MOCK_TRANSACTIONS = [
     from:      '0x1aB2…9c3D',
     to:        DEMO_ADDRESS,
     hash:      '0xabc123def456aaa',
-    timestamp: Date.now() - 3600000,
+    timestamp: Date.now() - 1213200000,
     status:    'confirmed',
     gas:       0.0021,
   },
@@ -95,7 +108,7 @@ const MOCK_TRANSACTIONS = [
     from:      DEMO_ADDRESS,
     to:        '0x9fE3…b4A1',
     hash:      '0xdef789abc012bbb',
-    timestamp: Date.now() - 7200000,
+    timestamp: Date.now() - 1216800000,
     status:    'confirmed',
     gas:       0.0018,
   },
@@ -108,7 +121,7 @@ const MOCK_TRANSACTIONS = [
     from:      DEMO_ADDRESS,
     to:        '0xUniswapRouter',
     hash:      '0x112233aabbccdd',
-    timestamp: Date.now() - 86400000,
+    timestamp: Date.now() - 1296000000,
     status:    'confirmed',
     gas:       0.0054,
   },
@@ -121,7 +134,7 @@ const MOCK_TRANSACTIONS = [
     from:      '0x5cF1…a2E8',
     to:        DEMO_ADDRESS,
     hash:      '0x998877665544aaa',
-    timestamp: Date.now() - 172800000,
+    timestamp: Date.now() - 1382400000,
     status:    'confirmed',
     gas:       0.0015,
   },
@@ -134,7 +147,7 @@ const MOCK_TRANSACTIONS = [
     from:      DEMO_ADDRESS,
     to:        '0x3dB5…e7F2',
     hash:      '0xffeeddccbbaa9988',
-    timestamp: Date.now() - 259200000,
+    timestamp: Date.now() - 1468800000,
     status:    'confirmed',
     gas:       0.0021,
   },
@@ -147,7 +160,7 @@ const MOCK_TRANSACTIONS = [
     from:      '0x8aA0…c6D3',
     to:        DEMO_ADDRESS,
     hash:      '0x1122334455667788',
-    timestamp: Date.now() - 345600000,
+    timestamp: Date.now() - 1555200000,
     status:    'confirmed',
     gas:       0.0019,
   },
@@ -160,7 +173,7 @@ const MOCK_TRANSACTIONS = [
     from:      DEMO_ADDRESS,
     to:        '0x2eC4…f8B9',
     hash:      '0xaabbccddeeff1122',
-    timestamp: Date.now() - 432000000,
+    timestamp: Date.now() - 1641600000,
     status:    'confirmed',
     gas:       0.0022,
   },
@@ -173,7 +186,7 @@ const MOCK_TRANSACTIONS = [
     from:      DEMO_ADDRESS,
     to:        '0xUniswapRouter',
     hash:      '0x99aabbccddeeff33',
-    timestamp: Date.now() - 518400000,
+    timestamp: Date.now() - 1728000000,
     status:    'confirmed',
     gas:       0.0048,
   },
@@ -186,7 +199,7 @@ const MOCK_TRANSACTIONS = [
     from:      '0x7bD2…a1E5',
     to:        DEMO_ADDRESS,
     hash:      '0x44556677889900aa',
-    timestamp: Date.now() - 604800000,
+    timestamp: Date.now() - 1814400000,
     status:    'confirmed',
     gas:       0.0021,
   },
@@ -199,7 +212,7 @@ const MOCK_TRANSACTIONS = [
     from:      DEMO_ADDRESS,
     to:        '0x6aC3…b9D4',
     hash:      '0xbbccddee1234ffaa',
-    timestamp: Date.now() - 691200000,
+    timestamp: Date.now() - 1900800000,
     status:    'confirmed',
     gas:       0.0021,
   },
@@ -279,26 +292,7 @@ async function generateNewWallet() {
   };
 }
 
-async function importWalletFromMnemonic(mnemonic) {
-  if (typeof ethers === 'undefined') {
-    throw new Error('Ethers.js not loaded');
-  }
-  const phrase = mnemonic.trim();
-  const wordCount = phrase.split(/\s+/).length;
-  if (wordCount !== 12 && wordCount !== 24) {
-    throw new Error('Seed phrase must be 12 or 24 words.');
-  }
-  // Validate mnemonic
-  if (!ethers.Mnemonic.isValidMnemonic(phrase)) {
-    throw new Error('Invalid seed phrase. Please check the words and try again.');
-  }
-  const wallet = ethers.Wallet.fromPhrase(phrase);
-  return {
-    address:    wallet.address,
-    mnemonic:   phrase,
-    privateKey: wallet.privateKey,
-  };
-}
+
 
 /* =====================================================
    METAMASK INTEGRATION
@@ -573,34 +567,6 @@ const WalletModule = {
       }
     });
 
-    /* ---- Import wallet ---- */
-    document.getElementById('import-wallet-btn')?.addEventListener('click', () => {
-      document.getElementById('import-wallet-panel')?.classList.remove('hidden');
-      document.getElementById('generated-wallet-panel')?.classList.add('hidden');
-    });
-
-    document.getElementById('close-import-panel')?.addEventListener('click', () => {
-      document.getElementById('import-wallet-panel')?.classList.add('hidden');
-    });
-
-    document.getElementById('import-confirm-btn')?.addEventListener('click', async () => {
-      const phrase = document.getElementById('seed-phrase-input')?.value ?? '';
-      const result = document.getElementById('import-result');
-      if (!result) return;
-
-      try {
-        const w = await importWalletFromMnemonic(phrase);
-        setWalletAddress(w.address);
-        result.className = 'alert alert-success';
-        result.innerHTML = `<i class="fa-solid fa-circle-check"></i> Wallet imported: <code>${w.address.slice(0, 12)}…</code>`;
-        result.classList.remove('hidden');
-        window.AppModule?.showToast('Wallet imported successfully!', 'success');
-      } catch (err) {
-        result.className = 'alert alert-error';
-        result.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${AuthModule.sanitise(err.message)}`;
-        result.classList.remove('hidden');
-      }
-    });
 
     document.getElementById('close-generated-panel')?.addEventListener('click', () => {
       document.getElementById('generated-wallet-panel')?.classList.add('hidden');
@@ -702,7 +668,6 @@ const WalletModule = {
     setWalletAddress(w.address);
 
     panel.classList.remove('hidden');
-    document.getElementById('import-wallet-panel')?.classList.add('hidden');
   },
 };
 

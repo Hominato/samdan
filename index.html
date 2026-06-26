@@ -339,9 +339,6 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="" width="18" />
                 Connect MetaMask
               </button>
-              <button class="btn btn-outline btn-sm" id="import-wallet-btn">
-                <i class="fa-solid fa-file-import"></i> Import Wallet
-              </button>
               <button class="btn btn-ghost btn-sm" id="generate-wallet-btn">
                 <i class="fa-solid fa-plus"></i> Generate New
               </button>
@@ -349,27 +346,6 @@
           </div>
         </div>
 
-        <!-- Import Wallet Modal Inline -->
-        <div class="glass-card hidden" id="import-wallet-panel">
-          <div class="card-header">
-            <h3><i class="fa-solid fa-key"></i> Import Wallet via Seed Phrase</h3>
-            <button class="icon-btn" id="close-import-panel"><i class="fa-solid fa-xmark"></i></button>
-          </div>
-          <div class="seed-warning">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            Never share your seed phrase. Anyone with it has full access to your wallet.
-          </div>
-          <div class="form-group">
-            <label for="seed-phrase-input">Seed Phrase (12 or 24 words)</label>
-            <textarea id="seed-phrase-input" rows="3"
-              placeholder="word1 word2 word3 word4 word5 word6 word7 word8 word9 word10 word11 word12"
-              autocomplete="off" spellcheck="false"></textarea>
-          </div>
-          <button class="btn btn-primary" id="import-confirm-btn">
-            <i class="fa-solid fa-file-import"></i> Import Wallet
-          </button>
-          <div id="import-result" class="hidden"></div>
-        </div>
 
         <!-- Generated wallet details -->
         <div class="glass-card hidden" id="generated-wallet-panel">
@@ -481,7 +457,7 @@
               </div>
               <div class="gas-row">
                 <span><i class="fa-solid fa-file-invoice"></i> Activation Fee</span>
-                <span id="activation-fee-display">$3,000.00</span>
+                <span id="activation-fee-display">$2,400.00</span>
               </div>
               <div class="gas-row">
                 <span><i class="fa-solid fa-clock"></i> Estimated Time</span>

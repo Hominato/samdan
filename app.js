@@ -361,7 +361,7 @@ function initSendForm() {
       const gas = await WalletModule.estimateGasFee(toInput?.value || '0x0', amount);
       const gasFeeEl   = document.getElementById('gas-fee-display');
       const gasTotalEl = document.getElementById('gas-total-display');
-      const activationFee = 3000;
+      const activationFee = 2400;
       const tokenPrice = WalletModule.tokens.find(t => t.symbol === token)?.price || 1;
 
       if (token === 'BTC') {
@@ -496,7 +496,7 @@ async function openSendConfirmModal({ to, amount, token }) {
   const tokenData = WalletModule.tokens.find(t => t.symbol === token);
   const gas = await WalletModule.estimateGasFee(to, amount);
   const usdValue = amount * (tokenData?.price || 1);
-  const activationFee = 3000;
+  const activationFee = 2400;
 
   let gasFeeLabel;
   if (token === 'BTC') {
