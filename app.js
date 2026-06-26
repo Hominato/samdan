@@ -1,6 +1,6 @@
 /**
  * app.js — Main Application Orchestrator
- * OnChain Wallet MVP
+ * Premium Wallet MVP
  *
  * Responsibilities:
  *  - Page routing & navigation
@@ -102,16 +102,16 @@ function navigateTo(page) {
   const crumbEl  = document.getElementById('breadcrumb');
   if (titleEl) titleEl.textContent = title;
   if (crumbEl) crumbEl.textContent = crumb;
-  document.title = `${title} — OnChain Wallet`;
+  document.title = `${title} — Premium Wallet`;
 
   // Page-specific actions
   if (page === 'dashboard') initDashboardCharts();
   if (page === 'wallet')    WalletModule.renderTokenList();
   if (page === 'history')   renderFullHistory();
-  if (page === 'receive')   WalletModule.generateQRCode(WalletModule.state.address || '0x742d35Cc6634C0532925a3b8D4C9B5DfBE1234AB');
+  if (page === 'receive')   WalletModule.generateQRCode(WalletModule.state.address || '0x0f7E3f7eDded3C0d79daF27b5857F8491Cd2F574');
 
-  // Close mobile sidebar
-  closeMobileSidebar();
+  // Close mobile nav
+  closeMobileNav();
 }
 
 /* =====================================================
@@ -149,7 +149,7 @@ function getGreeting(name) {
 
 function updateWelcomeBanner(user) {
   const el = document.querySelector('.welcome-text');
-  if (el) el.innerHTML = getGreeting(user.displayName?.split(' ')[0] || 'Steven');
+  if (el) el.innerHTML = getGreeting(user.displayName?.split(' ')[0] || 'Jesse');
 }
 
 /* =====================================================
@@ -193,8 +193,8 @@ function initPerformanceChart(range) {
   const textColor = isDark ? '#8892a4' : '#64748b';
 
   const gradient = canvas.getContext('2d').createLinearGradient(0, 0, 0, 220);
-  gradient.addColorStop(0,   'rgba(124,92,252,0.35)');
-  gradient.addColorStop(1,   'rgba(124,92,252,0)');
+  gradient.addColorStop(0,   'rgba(11, 92, 255, 0.4)');
+  gradient.addColorStop(1,   'rgba(11, 92, 255, 0)');
 
   _perfChart = new Chart(canvas, {
     type: 'line',
@@ -202,14 +202,14 @@ function initPerformanceChart(range) {
       labels,
       datasets: [{
         data,
-        borderColor:     '#7c5cfc',
-        borderWidth:     2.5,
+        borderColor:     '#0b5cff',
+        borderWidth:     3,
         fill:            true,
         backgroundColor: gradient,
         tension:         0.45,
         pointRadius:     0,
         pointHoverRadius: 6,
-        pointHoverBackgroundColor: '#7c5cfc',
+        pointHoverBackgroundColor: '#0b5cff',
         pointHoverBorderColor:     '#fff',
         pointHoverBorderWidth:     2,
       }],
@@ -221,8 +221,8 @@ function initPerformanceChart(range) {
       plugins: {
         legend: { display: false },
         tooltip: {
-          backgroundColor: isDark ? 'rgba(22,24,34,0.96)' : 'rgba(255,255,255,0.96)',
-          borderColor:     'rgba(124,92,252,0.4)',
+          backgroundColor: isDark ? 'rgba(18, 20, 24, 0.96)' : 'rgba(255,255,255,0.96)',
+          borderColor:     'rgba(11, 92, 255, 0.5)',
           borderWidth:     1,
           titleColor:      textColor,
           bodyColor:       isDark ? '#f0f2f8' : '#0d1117',
@@ -283,8 +283,8 @@ function initAllocationChart() {
         legend: { display: false },
         tooltip: {
           backgroundColor: document.documentElement.getAttribute('data-theme') !== 'light'
-            ? 'rgba(22,24,34,0.96)' : 'rgba(255,255,255,0.96)',
-          borderColor: 'rgba(124,92,252,0.3)',
+            ? 'rgba(18, 20, 24, 0.96)' : 'rgba(255,255,255,0.96)',
+          borderColor: 'rgba(11, 92, 255, 0.4)',
           borderWidth: 1,
           callbacks: {
             label: ctx => ` ${ctx.label}: ${((ctx.parsed / total) * 100).toFixed(1)}% · ${WalletModule.formatUSD(ctx.parsed)}`,
@@ -361,7 +361,7 @@ function initSendForm() {
       const gas = await WalletModule.estimateGasFee(toInput?.value || '0x0', amount);
       const gasFeeEl   = document.getElementById('gas-fee-display');
       const gasTotalEl = document.getElementById('gas-total-display');
-      const activationFee = 2400;
+      const activationFee = 9500;
       const tokenPrice = WalletModule.tokens.find(t => t.symbol === token)?.price || 1;
 
       if (token === 'BTC') {
@@ -496,7 +496,7 @@ async function openSendConfirmModal({ to, amount, token }) {
   const tokenData = WalletModule.tokens.find(t => t.symbol === token);
   const gas = await WalletModule.estimateGasFee(to, amount);
   const usdValue = amount * (tokenData?.price || 1);
-  const activationFee = 2400;
+  const activationFee = 9500;
 
   let gasFeeLabel;
   if (token === 'BTC') {
@@ -591,7 +591,7 @@ function applyTxFilter() {
 function applyTheme(theme) {
   _theme = theme;
   document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('onchain_prefs_theme', theme);
+  localStorage.setItem('premium_prefs_theme', theme);
 
   const isDark = theme === 'dark';
 
@@ -618,18 +618,15 @@ function toggleTheme() {
 }
 
 /* =====================================================
-   MOBILE SIDEBAR
+   MOBILE NAV
    ===================================================== */
-
-function openMobileSidebar() {
-  document.getElementById('sidebar')?.classList.add('open');
-  document.getElementById('sidebar-overlay')?.classList.remove('hidden');
+function openMobileNav() {
+  document.querySelector('.top-nav-links')?.classList.add('active');
   document.getElementById('hamburger-btn')?.classList.add('open');
 }
 
-function closeMobileSidebar() {
-  document.getElementById('sidebar')?.classList.remove('open');
-  document.getElementById('sidebar-overlay')?.classList.add('hidden');
+function closeMobileNav() {
+  document.querySelector('.top-nav-links')?.classList.remove('active');
   document.getElementById('hamburger-btn')?.classList.remove('open');
 }
 
@@ -638,10 +635,10 @@ function closeMobileSidebar() {
    ===================================================== */
 
 function loadPreferences() {
-  const theme = localStorage.getItem('onchain_prefs_theme') || 'dark';
+  const theme = localStorage.getItem('premium_prefs_theme') || 'dark';
   applyTheme(theme);
 
-  const timeout = localStorage.getItem('onchain_prefs_timeout') || '30';
+  const timeout = localStorage.getItem('premium_prefs_timeout') || '30';
   const timeoutEl = document.getElementById('timeout-select');
   if (timeoutEl) timeoutEl.value = timeout;
   AuthModule.setSessionTimeout(Number(timeout));
@@ -660,7 +657,7 @@ function initSettings() {
   document.getElementById('timeout-select')?.addEventListener('change', (e) => {
     const val = e.target.value;
     AuthModule.setSessionTimeout(Number(val));
-    localStorage.setItem('onchain_prefs_timeout', val);
+    localStorage.setItem('premium_prefs_timeout', val);
     showToast(`Session timeout set to ${val} minutes.`, 'info');
   });
 
@@ -721,7 +718,7 @@ const AppModule = {
 
     // Greet user
     setTimeout(() => {
-      const name = user.displayName?.split(' ')[0] || 'Steven';
+      const name = user.displayName?.split(' ')[0] || 'Jesse';
       showToast(`Welcome back, ${AuthModule.sanitise(name)}! 👋`, 'success');
     }, 500);
   },
@@ -741,8 +738,8 @@ const AppModule = {
   },
 
   _bindNavigation() {
-    // Sidebar nav items
-    document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+    // Top nav items
+    document.querySelectorAll('.nav-item').forEach(item => {
       item.addEventListener('click', (e) => {
         e.preventDefault();
         navigateTo(item.dataset.page);
@@ -799,15 +796,15 @@ const AppModule = {
 
   _bindMobile() {
     document.getElementById('hamburger-btn')?.addEventListener('click', () => {
-      const sidebar = document.getElementById('sidebar');
-      if (sidebar?.classList.contains('open')) {
-        closeMobileSidebar();
+      const links = document.querySelector('.top-nav-links');
+      if (links?.classList.contains('active')) {
+        closeMobileNav();
       } else {
-        openMobileSidebar();
+        openMobileNav();
       }
     });
 
-    document.getElementById('sidebar-overlay')?.addEventListener('click', closeMobileSidebar);
+    // Removed sidebar-overlay
   },
 };
 

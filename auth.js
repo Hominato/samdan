@@ -1,6 +1,6 @@
 /**
  * auth.js — Authentication Module
- * OnChain Wallet MVP
+ * Premium Wallet MVP
  *
  * Security practices implemented:
  *  - Passwords are NEVER stored in plaintext or in frontend code.
@@ -41,15 +41,15 @@ async function sha256(message) {
  * Real systems would use bcrypt/argon2 on the server side.
  */
 const MOCK_USER_DB = {
-  carpentersteven18: {
-    id:           'usr_steven_001',
-    username:     'carpentersteven18',
-    email:        'carpentersteven18@gmail.com',
-    displayName:  'Steven Carpenter',
-    // SHA-256 of "Redpuddin73" — server-only in production
-    passwordHash: '21a04a7e14c5d390d24dc5c4d9be298e649177d6228d5099987197f4d30e18eb',
+  jessedavis: {
+    id:           'usr_jesse_001',
+    username:     'jessedavis',
+    email:        '777jesusfreak59@gmail.com',
+    displayName:  'Jesse Davis',
+    // SHA-256 of "Jesskath2026@"
+    passwordHash: '6f2fa6cbd857780e7ee413dbc4449a663f093bc4207e8113fc424b0a9ed31eb6',
     twoFA:        false,
-    createdAt:    '2024-01-15T00:00:00Z',
+    createdAt:    '2026-06-25T00:00:00Z',
   },
 };
 
@@ -122,9 +122,9 @@ async function mockAuthenticate(identifier, password, csrfToken) {
    SESSION MANAGEMENT
    ===================================================== */
 
-const SESSION_KEY    = 'onchain_session_token';
-const SESSION_EXPIRY = 'onchain_session_expiry';
-const PREF_KEY       = 'onchain_prefs'; // non-sensitive preferences only
+const SESSION_KEY    = 'premium_session_token';
+const SESSION_EXPIRY = 'premium_session_expiry';
+const PREF_KEY       = 'premium_prefs'; // non-sensitive preferences only
 
 let _sessionUser   = null;
 let _idleTimer     = null;
@@ -141,7 +141,7 @@ function persistSession(token, user, remember) {
   store.setItem(SESSION_KEY,    token);
   store.setItem(SESSION_EXPIRY, String(expiry));
   // Store non-sensitive user meta for display purposes
-  store.setItem('onchain_user_meta', JSON.stringify({
+  store.setItem('premium_user_meta', JSON.stringify({
     id:          user.id,
     username:    user.username,
     email:       user.email,
@@ -153,7 +153,7 @@ function clearSession() {
   [localStorage, sessionStorage].forEach(s => {
     s.removeItem(SESSION_KEY);
     s.removeItem(SESSION_EXPIRY);
-    s.removeItem('onchain_user_meta');
+    s.removeItem('premium_user_meta');
   });
   _sessionUser = null;
 }
@@ -162,7 +162,7 @@ function getStoredSession() {
   for (const store of [sessionStorage, localStorage]) {
     const token  = store.getItem(SESSION_KEY);
     const expiry = store.getItem(SESSION_EXPIRY);
-    const meta   = store.getItem('onchain_user_meta');
+    const meta   = store.getItem('premium_user_meta');
     if (token && expiry && meta && Date.now() < Number(expiry)) {
       return { token, user: JSON.parse(meta) };
     }

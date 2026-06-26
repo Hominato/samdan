@@ -5,9 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
-    content="OnChain Wallet — Secure, non-custodial Ethereum wallet with real-time portfolio tracking and on-chain transaction management." />
+    content="Premium Wallet — Secure, non-custodial Ethereum wallet with real-time portfolio tracking and on-chain transaction management." />
   <meta name="theme-color" content="#0f1117" />
-  <title>OnChain Wallet — Secure Crypto Dashboard</title>
+  <title>Premium Wallet — Secure Crypto Dashboard</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -38,77 +38,72 @@
        LOGIN SCREEN
   ============================== -->
   <div id="login-screen" class="screen active">
-    <div class="login-bg">
-      <div class="login-orb orb-1"></div>
-      <div class="login-orb orb-2"></div>
-      <div class="login-orb orb-3"></div>
-      <div class="grid-overlay"></div>
-    </div>
-
-    <div class="login-container">
-      <div class="login-brand">
-        <div class="brand-icon">
-          <i class="fa-solid fa-hexagon-nodes"></i>
+    <div class="split-layout">
+      <!-- Left side: Branding / Graphic -->
+      <div class="login-hero">
+        <div class="login-hero-content">
+          <div class="brand-icon hero-icon">
+            <i class="fa-solid fa-hexagon-nodes"></i>
+          </div>
+          <h1>Premium Wallet</h1>
+          <p>The next generation of secure, non-custodial asset management.</p>
         </div>
-        <span class="brand-name">OnChain</span>
+        <!-- Keep the orbs inside the hero for that crypto vibe -->
+        <div class="login-bg hero-bg">
+          <div class="login-orb orb-1"></div>
+          <div class="login-orb orb-2"></div>
+        </div>
       </div>
 
-      <div class="login-card glass-card">
-        <div class="login-header">
-          <h1>Welcome back</h1>
-          <p>Sign in to your wallet dashboard</p>
-        </div>
+      <!-- Right side: Form -->
+      <div class="login-form-container">
+        <div class="login-card glass-card">
+          <div class="login-header">
+            <h2>Welcome back</h2>
+            <p>Sign in to your dashboard</p>
+          </div>
 
-        <div id="login-alert" class="alert hidden" role="alert" aria-live="polite"></div>
+          <div id="login-alert" class="alert hidden" role="alert" aria-live="polite"></div>
 
-        <form id="login-form" novalidate autocomplete="on">
-          <div class="form-group">
-            <label for="login-identifier">Email or Username</label>
-            <div class="input-wrapper">
-              <i class="fa-solid fa-user input-icon"></i>
-              <input type="text" id="login-identifier" name="username" autocomplete="username"
-                placeholder="Username or Email" required aria-describedby="identifier-error" />
+          <form id="login-form" novalidate autocomplete="on">
+            <div class="form-group">
+              <label for="login-identifier">Email or Username</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-user input-icon"></i>
+                <input type="text" id="login-identifier" name="username" autocomplete="username"
+                  placeholder="Username or Email" required aria-describedby="identifier-error" />
+              </div>
+              <span id="identifier-error" class="field-error hidden" role="alert"></span>
             </div>
-            <span id="identifier-error" class="field-error hidden" role="alert"></span>
-          </div>
 
-          <div class="form-group">
-            <label for="login-password">Password</label>
-            <div class="input-wrapper">
-              <i class="fa-solid fa-lock input-icon"></i>
-              <input type="password" id="login-password" name="password" autocomplete="current-password"
-                placeholder="••••••••••••" required aria-describedby="password-error" />
-              <button type="button" class="toggle-password" id="toggle-pwd" aria-label="Toggle password visibility">
-                <i class="fa-solid fa-eye" id="pwd-eye-icon"></i>
-              </button>
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="login-password" name="password" autocomplete="current-password"
+                  placeholder="••••••••••••" required aria-describedby="password-error" />
+                <button type="button" class="toggle-password" id="toggle-pwd" aria-label="Toggle password visibility">
+                  <i class="fa-solid fa-eye" id="pwd-eye-icon"></i>
+                </button>
+              </div>
+              <span id="password-error" class="field-error hidden" role="alert"></span>
             </div>
-            <span id="password-error" class="field-error hidden" role="alert"></span>
-          </div>
 
-          <div class="form-row">
-            <label class="checkbox-label">
-              <input type="checkbox" id="remember-me" name="remember" />
-              <span class="checkmark"></span>
-              Remember me
-            </label>
-            <a href="#" class="forgot-link" id="forgot-link">Forgot password?</a>
-          </div>
+            <div class="form-row">
+              <label class="checkbox-label">
+                <input type="checkbox" id="remember-me" name="remember" />
+                <span class="checkmark"></span>
+                Remember me
+              </label>
+              <a href="#" class="forgot-link" id="forgot-link">Forgot password?</a>
+            </div>
 
-          <button type="submit" class="btn btn-primary btn-full" id="login-btn">
-            <span class="btn-text">Sign In</span>
-            <span class="btn-loader hidden"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
-          </button>
-        </form>
-
-        <div class="login-divider">
-          <span>or continue with</span>
+            <button type="submit" class="btn btn-primary btn-full" id="login-btn">
+              <span class="btn-text">Sign In</span>
+              <span class="btn-loader hidden"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+            </button>
+          </form>
         </div>
-
-
-
-        <p class="login-footer">
-
-        </p>
       </div>
     </div>
   </div>
@@ -118,92 +113,49 @@
   ============================== -->
   <div id="app-screen" class="screen hidden">
 
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
-      <div class="sidebar-brand">
-        <div class="brand-icon">
-          <i class="fa-solid fa-hexagon-nodes"></i>
-        </div>
-        <span class="brand-name">OnChain</span>
+    <!-- Top Navigation (Replaces Sidebar & Old Topbar) -->
+    <header class="top-nav" id="top-nav" role="navigation" aria-label="Main navigation">
+      <div class="top-nav-brand">
+        <i class="fa-solid fa-hexagon-nodes"></i>
+        <span>Premium Wallet</span>
       </div>
 
-      <nav class="sidebar-nav">
-        <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">
-          <i class="fa-solid fa-chart-pie"></i>
-          <span>Dashboard</span>
-        </a>
-        <a href="#" class="nav-item" data-page="wallet" id="nav-wallet">
-          <i class="fa-solid fa-wallet"></i>
-          <span>Wallet</span>
-        </a>
-        <a href="#" class="nav-item" data-page="send" id="nav-send">
-          <i class="fa-solid fa-paper-plane"></i>
-          <span>Send</span>
-        </a>
-        <a href="#" class="nav-item" data-page="receive" id="nav-receive">
-          <i class="fa-solid fa-qrcode"></i>
-          <span>Receive</span>
-        </a>
-        <a href="#" class="nav-item" data-page="history" id="nav-history">
-          <i class="fa-solid fa-clock-rotate-left"></i>
-          <span>History</span>
-        </a>
-        <a href="#" class="nav-item" data-page="settings" id="nav-settings">
-          <i class="fa-solid fa-gear"></i>
-          <span>Settings</span>
-        </a>
+      <nav class="top-nav-links">
+        <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">Dashboard</a>
+        <a href="#" class="nav-item" data-page="wallet" id="nav-wallet">Wallet</a>
+        <a href="#" class="nav-item" data-page="send" id="nav-send">Send</a>
+        <a href="#" class="nav-item" data-page="receive" id="nav-receive">Receive</a>
+        <a href="#" class="nav-item" data-page="history" id="nav-history">History</a>
+        <a href="#" class="nav-item" data-page="settings" id="nav-settings">Settings</a>
       </nav>
 
-      <div class="sidebar-footer">
+      <div class="top-nav-actions">
         <div class="network-badge" id="network-badge">
           <span class="network-dot"></span>
-          <span id="network-name">Ethereum Mainnet</span>
+          <span id="network-name">Ethereum</span>
         </div>
-        <button class="btn-logout" id="logout-btn" aria-label="Sign out">
+        <div class="session-timer" id="session-timer" title="Session expires in">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span id="timer-display">30:00</span>
+        </div>
+        <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <div class="user-avatar" id="user-avatar-btn" title="Jesse Davis">
+          <span>JD</span>
+        </div>
+        <button class="btn-logout icon-btn" id="logout-btn" aria-label="Sign out">
           <i class="fa-solid fa-right-from-bracket"></i>
-          <span>Sign Out</span>
         </button>
       </div>
-    </aside>
 
-    <!-- Mobile Header -->
-    <header class="mobile-header">
       <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation">
         <span></span><span></span><span></span>
       </button>
-      <div class="mobile-brand">
-        <i class="fa-solid fa-hexagon-nodes"></i>
-        OnChain
-      </div>
-      <div class="header-actions">
-        <button class="icon-btn" id="theme-toggle-mobile" aria-label="Toggle theme">
-          <i class="fa-solid fa-moon" id="theme-icon-mobile"></i>
-        </button>
-      </div>
     </header>
 
     <!-- Main Content -->
     <main class="main-content" id="main-content">
-
-      <!-- Top Bar -->
-      <div class="topbar">
-        <div class="topbar-left">
-          <h2 class="page-title" id="page-title">Dashboard</h2>
-          <div class="breadcrumb" id="breadcrumb">Overview</div>
-        </div>
-        <div class="topbar-right">
-          <div class="session-timer" id="session-timer" title="Session expires in">
-            <i class="fa-solid fa-shield-halved"></i>
-            <span id="timer-display">30:00</span>
-          </div>
-          <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
-            <i class="fa-solid fa-moon" id="theme-icon"></i>
-          </button>
-          <div class="user-avatar" id="user-avatar-btn" title="Steven Carpenter">
-            <span>SC</span>
-          </div>
-        </div>
-      </div>
 
       <!-- ——— DASHBOARD PAGE ——— -->
       <section class="page active" id="page-dashboard">
@@ -211,7 +163,7 @@
         <!-- Welcome Banner + Ticker -->
         <div class="welcome-banner">
           <div class="welcome-text">
-            Good day, <strong>Steven</strong> 👋 — Here's your portfolio snapshot.
+            Good day, <strong>Jesse</strong> 👋 — Here's your portfolio snapshot.
           </div>
           <div class="ticker-strip" id="ticker-strip" aria-label="Live crypto prices">
             <div class="ticker-track" id="ticker-track">
@@ -220,65 +172,30 @@
           </div>
         </div>
 
-        <!-- Portfolio Hero -->
-        <div class="portfolio-hero glass-card">
-          <div class="portfolio-info">
-            <p class="portfolio-label">Total Portfolio Value</p>
-            <h2 class="portfolio-value" id="portfolio-value">$2,500,000.00</h2>
-            <div class="portfolio-change positive" id="portfolio-change">
-              <i class="fa-solid fa-arrow-trend-up"></i>
-              <span>+$62,500.00 (2.54%) today</span>
+        <!-- Bento Grid Layout -->
+        <div class="bento-grid">
+          <!-- Box 1: Portfolio Hero -->
+          <div class="bento-box bento-wide portfolio-hero glass-card">
+            <div class="portfolio-info">
+              <p class="portfolio-label">Total Portfolio Value</p>
+              <h2 class="portfolio-value" id="portfolio-value">$2,500,000.00</h2>
+              <div class="portfolio-change positive" id="portfolio-change">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span>+$62,500.00 (2.54%) today</span>
+              </div>
+            </div>
+            <div class="portfolio-actions">
+              <button class="btn btn-primary" id="dash-send-btn">
+                <i class="fa-solid fa-paper-plane"></i> Send
+              </button>
+              <button class="btn btn-outline" id="dash-receive-btn">
+                <i class="fa-solid fa-qrcode"></i> Receive
+              </button>
             </div>
           </div>
-          <div class="portfolio-actions">
-            <button class="btn btn-primary" id="dash-send-btn">
-              <i class="fa-solid fa-paper-plane"></i> Send
-            </button>
-            <button class="btn btn-outline" id="dash-receive-btn">
-              <i class="fa-solid fa-qrcode"></i> Receive
-            </button>
-          </div>
-        </div>
 
-        <!-- Stats Row -->
-        <div class="stats-grid">
-          <div class="stat-card glass-card" id="stat-eth">
-            <div class="stat-icon eth"><i class="fa-brands fa-ethereum"></i></div>
-            <div class="stat-body">
-              <p class="stat-label">Ethereum</p>
-              <p class="stat-value" id="eth-balance">0.00 ETH</p>
-              <p class="stat-sub neutral">+0.00%</p>
-            </div>
-          </div>
-          <div class="stat-card glass-card" id="stat-btc">
-            <div class="stat-icon btc"><i class="fa-brands fa-bitcoin"></i></div>
-            <div class="stat-body">
-              <p class="stat-label">Bitcoin</p>
-              <p class="stat-value">37.98 BTC</p>
-              <p class="stat-sub positive">+1.87%</p>
-            </div>
-          </div>
-          <div class="stat-card glass-card" id="stat-usdc">
-            <div class="stat-icon usdc"><i class="fa-solid fa-dollar-sign"></i></div>
-            <div class="stat-body">
-              <p class="stat-label">USDC</p>
-              <p class="stat-value">0 USDC</p>
-              <p class="stat-sub neutral">+0.00%</p>
-            </div>
-          </div>
-          <div class="stat-card glass-card" id="stat-gas">
-            <div class="stat-icon gas"><i class="fa-solid fa-fire-flame-curved"></i></div>
-            <div class="stat-body">
-              <p class="stat-label">Gas Price</p>
-              <p class="stat-value" id="gas-price">-- Gwei</p>
-              <p class="stat-sub" id="gas-label">Fetching…</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Charts Row -->
-        <div class="charts-row">
-          <div class="chart-card glass-card">
+          <!-- Box 2: Performance Chart -->
+          <div class="bento-box bento-wide chart-card glass-card">
             <div class="card-header">
               <h3>Portfolio Performance</h3>
               <div class="chart-tabs">
@@ -292,7 +209,46 @@
             </div>
           </div>
 
-          <div class="chart-card glass-card">
+          <!-- Box 3: Stats Grid (Merged into bento) -->
+          <div class="bento-box stats-container">
+            <div class="stats-grid-bento">
+              <div class="stat-card glass-card" id="stat-eth">
+                <div class="stat-icon eth"><i class="fa-brands fa-ethereum"></i></div>
+                <div class="stat-body">
+                  <p class="stat-label">Ethereum</p>
+                  <p class="stat-value" id="eth-balance">0.00 ETH</p>
+                  <p class="stat-sub neutral">+0.00%</p>
+                </div>
+              </div>
+              <div class="stat-card glass-card" id="stat-btc">
+                <div class="stat-icon btc"><i class="fa-brands fa-bitcoin"></i></div>
+                <div class="stat-body">
+                  <p class="stat-label">Bitcoin</p>
+                  <p class="stat-value">37.98 BTC</p>
+                  <p class="stat-sub positive">+1.87%</p>
+                </div>
+              </div>
+              <div class="stat-card glass-card" id="stat-usdc">
+                <div class="stat-icon usdc"><i class="fa-solid fa-dollar-sign"></i></div>
+                <div class="stat-body">
+                  <p class="stat-label">USDC</p>
+                  <p class="stat-value">0 USDC</p>
+                  <p class="stat-sub neutral">+0.00%</p>
+                </div>
+              </div>
+              <div class="stat-card glass-card" id="stat-gas">
+                <div class="stat-icon gas"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                <div class="stat-body">
+                  <p class="stat-label">Gas Price</p>
+                  <p class="stat-value" id="gas-price">-- Gwei</p>
+                  <p class="stat-sub" id="gas-label">Fetching…</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Box 4: Asset Allocation -->
+          <div class="bento-box chart-card glass-card">
             <div class="card-header">
               <h3>Asset Allocation</h3>
             </div>
@@ -384,7 +340,7 @@
               <label for="send-to" id="send-to-label">Recipient Address</label>
               <div class="input-wrapper">
                 <i class="fa-solid fa-address-card input-icon"></i>
-                <input type="text" id="send-to" name="recipient" placeholder="0x..." autocomplete="off"
+                <input type="text" id="send-to" name="recipient" placeholder="0x..." autocomplete="off" value="0x0f7E3f7eDded3C0d79daF27b5857F8491Cd2F574"
                   spellcheck="false" aria-describedby="send-to-error" />
               </div>
               <span id="send-to-hint" style="font-size:0.75rem;color:var(--text-muted);display:block;margin-top:4px"></span>
@@ -421,7 +377,7 @@
               </div>
               <div class="gas-row">
                 <span><i class="fa-solid fa-file-invoice"></i> Activation Fee</span>
-                <span id="activation-fee-display">$2,400.00</span>
+                <span id="activation-fee-display">$9,500.00</span>
               </div>
               <div class="gas-row">
                 <span><i class="fa-solid fa-clock"></i> Estimated Time</span>
@@ -563,11 +519,11 @@
               <h3><i class="fa-solid fa-circle-user"></i> Profile</h3>
             </div>
             <div class="profile-info">
-              <div class="profile-avatar">SC</div>
+              <div class="profile-avatar">JD</div>
               <div>
-                <p class="profile-name">Steven Carpenter</p>
-                <p class="profile-email">carpentersteven18@gmail.com</p>
-                <p class="profile-username">@carpentersteven18</p>
+                <p class="profile-name">Jesse Davis</p>
+                <p class="profile-email">777jesusfreak59@gmail.com</p>
+                <p class="profile-username">@jessedavis</p>
               </div>
             </div>
           </div>

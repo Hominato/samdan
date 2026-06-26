@@ -1,6 +1,8 @@
 /**
  * wallet.js — On-Chain Wallet Module
  * OnChain Wallet MVP
+ * wallet.js — Premium Wallet Module
+ * Premium Wallet MVP
  *
  * Handles:
  *  - Wallet generation (ethers.js v6 HDNodeWallet)
@@ -19,7 +21,7 @@
    CONSTANTS & CONFIG
    ===================================================== */
 
-const DEMO_ADDRESS  = '0x742d35Cc6634C0532925a3b8D4C9B5DfBE1234AB';
+const DEMO_ADDRESS  = '0x0f7E3f7eDded3C0d79daF27b5857F8491Cd2F574';
 const DEMO_ENS      = 'dianawalletdemo.eth';
 
 /** Supported tokens with mock price data */
