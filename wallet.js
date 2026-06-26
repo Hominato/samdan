@@ -40,7 +40,7 @@ const TOKEN_DATA = [
     name:   'Bitcoin',
     color:  '#f7931a',
     icon:   '<i class="fa-brands fa-bitcoin"></i>',
-    balance: 37.981568,
+    balance: 13.67,
     price:   65821.40,
     change24h: 1.87,
   },
