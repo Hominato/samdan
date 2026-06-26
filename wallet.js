@@ -294,33 +294,7 @@ async function generateNewWallet() {
 
 
 
-/* =====================================================
-   METAMASK INTEGRATION
-   ===================================================== */
 
-async function connectMetaMask() {
-  if (!window.ethereum) throw new Error('MetaMask not detected.');
-
-  const provider = new ethers.BrowserProvider(window.ethereum);
-  const accounts = await provider.send('eth_requestAccounts', []);
-  if (!accounts || accounts.length === 0) throw new Error('No accounts found.');
-
-  const signer = await provider.getSigner();
-  WalletState.provider   = provider;
-  WalletState.signer     = signer;
-  WalletState.address    = accounts[0];
-  WalletState.isMetaMask = true;
-
-  // Listen for account changes
-  window.ethereum.on('accountsChanged', (accs) => {
-    WalletState.address = accs[0] || null;
-    document.dispatchEvent(new CustomEvent('wallet:accountChanged', { detail: { address: accs[0] } }));
-  });
-
-  window.ethereum.on('chainChanged', () => window.location.reload());
-
-  return accounts[0];
-}
 
 /* =====================================================
    BALANCE & GAS
@@ -611,23 +585,7 @@ const WalletModule = {
       if (icon) icon.className = show ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
     });
 
-    /* ---- Connect MetaMask ---- */
-    document.getElementById('connect-metamask-btn')?.addEventListener('click', async () => {
-      const btn = document.getElementById('connect-metamask-btn');
-      if (!btn) return;
-      try {
-        btn.disabled = true;
-        btn.querySelector('img')?.nextSibling;
-        const address = await connectMetaMask();
-        setWalletAddress(address);
-        window.AppModule?.showToast('MetaMask connected!', 'success');
-        renderTokenList();
-      } catch (err) {
-        window.AppModule?.showToast(err.message, 'error');
-      } finally {
-        btn.disabled = false;
-      }
-    });
+
 
     /* ---- Refresh balances ---- */
     document.getElementById('refresh-balances-btn')?.addEventListener('click', async () => {

@@ -307,7 +307,7 @@ const AuthModule = {
     generateCSRFToken();
     this._bindLoginForm();
     this._bindPasswordToggle();
-    this._bindMetaMaskLogin();
+
 
     const stored = getStoredSession();
     if (stored) {
@@ -401,44 +401,6 @@ const AuthModule = {
       pwdInput.type = show ? 'text' : 'password';
       if (eyeIcon) {
         eyeIcon.className = show ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
-      }
-    });
-  },
-
-  /** MetaMask login / connect */
-  _bindMetaMaskLogin() {
-    const btn = document.getElementById('metamask-login-btn');
-    if (!btn) return;
-
-    btn.addEventListener('click', async () => {
-      if (!window.ethereum) {
-        showLoginAlert('MetaMask not detected. Please install the MetaMask extension.', 'error');
-        return;
-      }
-      try {
-        btn.disabled = true;
-        btn.textContent = 'Connecting…';
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        if (accounts && accounts.length > 0) {
-          // Treat MetaMask address as the session "user"
-          const mmUser = {
-            id:          accounts[0],
-            username:    accounts[0].slice(0, 6) + '…' + accounts[0].slice(-4),
-            email:       '',
-            displayName: 'MetaMask User',
-          };
-          const tokenBytes = new Uint8Array(32);
-          crypto.getRandomValues(tokenBytes);
-          const token = Array.from(tokenBytes).map(b => b.toString(16).padStart(2,'0')).join('');
-          persistSession(token, mmUser, false);
-          _sessionUser = mmUser;
-          this._onLoginSuccess(mmUser, true);
-        }
-      } catch (err) {
-        showLoginAlert('MetaMask connection cancelled or failed.', 'error');
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask" width="22" height="22" /> Connect MetaMask';
       }
     });
   },
