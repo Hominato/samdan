@@ -76,6 +76,19 @@ const TOKEN_DATA = [
 /** Mock transaction history */
 const MOCK_TRANSACTIONS = [
   {
+    id:        'tx_new',
+    type:      'receive',
+    asset:     'USDC',
+    amount:    500,
+    usd:       500.00,
+    from:      '0x4fA2…d8B1',
+    to:        DEMO_ADDRESS,
+    hash:      '0xf1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6',
+    timestamp: new Date('2026-07-03T00:00:00Z').getTime(),
+    status:    'confirmed',
+    gas:       0.0012,
+  },
+  {
     id:        'tx_000',
     type:      'receive',
     asset:     'BTC',
