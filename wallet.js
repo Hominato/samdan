@@ -21,54 +21,54 @@
    CONSTANTS & CONFIG
    ===================================================== */
 
-const DEMO_ADDRESS  = '0x0f7E3f7eDded3C0d79daF27b5857F8491Cd2F574';
-const DEMO_ENS      = 'dianawalletdemo.eth';
+const DEMO_ADDRESS = '0x0f7E3f7eDded3C0d79daF27b5857F8491Cd2F574';
+const DEMO_ENS = 'dianawalletdemo.eth';
 
 /** Supported tokens with mock price data */
 const TOKEN_DATA = [
   {
     symbol: 'ETH',
-    name:   'Ethereum',
-    color:  '#627eea',
-    icon:   '<i class="fa-brands fa-ethereum"></i>',
+    name: 'Ethereum',
+    color: '#627eea',
+    icon: '<i class="fa-brands fa-ethereum"></i>',
     balance: 0,
-    price:   3548.22,
+    price: 3548.22,
     change24h: 3.21,
   },
   {
     symbol: 'BTC',
-    name:   'Bitcoin',
-    color:  '#f7931a',
-    icon:   '<i class="fa-brands fa-bitcoin"></i>',
+    name: 'Bitcoin',
+    color: '#f7931a',
+    icon: '<i class="fa-brands fa-bitcoin"></i>',
     balance: 13.67,
-    price:   65821.40,
+    price: 65821.40,
     change24h: 1.87,
   },
   {
     symbol: 'USDC',
-    name:   'USD Coin',
-    color:  '#2775ca',
-    icon:   '<span style="font-weight:800;font-size:0.85rem">$</span>',
+    name: 'USD Coin',
+    color: '#2775ca',
+    icon: '<span style="font-weight:800;font-size:0.85rem">$</span>',
     balance: 0,
-    price:   1.0001,
+    price: 1.0001,
     change24h: 0.01,
   },
   {
     symbol: 'LINK',
-    name:   'Chainlink',
-    color:  '#2a5ada',
-    icon:   '<i class="fa-solid fa-link"></i>',
+    name: 'Chainlink',
+    color: '#2a5ada',
+    icon: '<i class="fa-solid fa-link"></i>',
     balance: 0,
-    price:   14.72,
+    price: 14.72,
     change24h: -0.84,
   },
   {
     symbol: 'UNI',
-    name:   'Uniswap',
-    color:  '#ff007a',
-    icon:   '<i class="fa-solid fa-droplet"></i>',
+    name: 'Uniswap',
+    color: '#ff007a',
+    icon: '<i class="fa-solid fa-droplet"></i>',
     balance: 0,
-    price:   8.91,
+    price: 8.91,
     change24h: 2.15,
   },
 ];
@@ -76,186 +76,186 @@ const TOKEN_DATA = [
 /** Mock transaction history */
 const MOCK_TRANSACTIONS = [
   {
-    id:        'tx_new2',
-    type:      'receive',
-    asset:     'USDC',
-    amount:    1000,
-    usd:       1000.00,
-    from:      '0x3dC9…b2F7',
-    to:        DEMO_ADDRESS,
-    hash:      '0xe7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2',
-    timestamp: new Date('2026-07-06T12:00:00Z').getTime(),
-    status:    'confirmed',
-    gas:       0.0011,
+    id: 'tx_new2',
+    type: 'receive',
+    asset: 'USDC',
+    amount: 1000,
+    usd: 1000.00,
+    from: '0x3dC9…b2F7',
+    to: DEMO_ADDRESS,
+    hash: '0xe7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2',
+    timestamp: new Date('2026-07-06T16:30:00Z').getTime(),
+    status: 'confirmed',
+    gas: 0.0011,
   },
   {
-    id:        'tx_new1',
-    type:      'receive',
-    asset:     'USDC',
-    amount:    4000,
-    usd:       4000.00,
-    from:      '0x7aB1…e3C4',
-    to:        DEMO_ADDRESS,
-    hash:      '0xd4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9',
-    timestamp: new Date('2026-07-05T19:30:00Z').getTime(),
-    status:    'confirmed',
-    gas:       0.0013,
+    id: 'tx_new1',
+    type: 'receive',
+    asset: 'USDC',
+    amount: 4000,
+    usd: 4000.00,
+    from: '0x7aB1…e3C4',
+    to: DEMO_ADDRESS,
+    hash: '0xd4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9',
+    timestamp: new Date('2026-07-06T16:30:00Z').getTime(),
+    status: 'confirmed',
+    gas: 0.0013,
   },
   {
-    id:        'tx_new',
-    type:      'receive',
-    asset:     'USDC',
-    amount:    500,
-    usd:       500.00,
-    from:      '0x4fA2…d8B1',
-    to:        DEMO_ADDRESS,
-    hash:      '0xf1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6',
+    id: 'tx_new',
+    type: 'receive',
+    asset: 'USDC',
+    amount: 500,
+    usd: 500.00,
+    from: '0x4fA2…d8B1',
+    to: DEMO_ADDRESS,
+    hash: '0xf1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6',
     timestamp: new Date('2026-07-03T00:00:00Z').getTime(),
-    status:    'confirmed',
-    gas:       0.0012,
+    status: 'confirmed',
+    gas: 0.0012,
   },
   {
-    id:        'tx_000',
-    type:      'receive',
-    asset:     'BTC',
-    amount:    0.009115,
-    usd:       600.00,
-    from:      '0x9aB3…c4D5',
-    to:        DEMO_ADDRESS,
-    hash:      '0xabcdef1234567890',
+    id: 'tx_000',
+    type: 'receive',
+    asset: 'BTC',
+    amount: 0.009115,
+    usd: 600.00,
+    from: '0x9aB3…c4D5',
+    to: DEMO_ADDRESS,
+    hash: '0xabcdef1234567890',
     timestamp: new Date('2026-06-25T14:30:00Z').getTime(),
-    status:    'confirmed',
-    gas:       0.0001,
+    status: 'confirmed',
+    gas: 0.0001,
   },
   {
-    id:        'tx_001',
-    type:      'receive',
-    asset:     'ETH',
-    amount:    125.0,
-    usd:       443527.50,
-    from:      '0x1aB2…9c3D',
-    to:        DEMO_ADDRESS,
-    hash:      '0xabc123def456aaa',
+    id: 'tx_001',
+    type: 'receive',
+    asset: 'ETH',
+    amount: 125.0,
+    usd: 443527.50,
+    from: '0x1aB2…9c3D',
+    to: DEMO_ADDRESS,
+    hash: '0xabc123def456aaa',
     timestamp: Date.now() - 1213200000,
-    status:    'confirmed',
-    gas:       0.0021,
+    status: 'confirmed',
+    gas: 0.0021,
   },
   {
-    id:        'tx_002',
-    type:      'send',
-    asset:     'USDC',
-    amount:    50000,
-    usd:       50002.00,
-    from:      DEMO_ADDRESS,
-    to:        '0x9fE3…b4A1',
-    hash:      '0xdef789abc012bbb',
+    id: 'tx_002',
+    type: 'send',
+    asset: 'USDC',
+    amount: 50000,
+    usd: 50002.00,
+    from: DEMO_ADDRESS,
+    to: '0x9fE3…b4A1',
+    hash: '0xdef789abc012bbb',
     timestamp: Date.now() - 1216800000,
-    status:    'confirmed',
-    gas:       0.0018,
+    status: 'confirmed',
+    gas: 0.0018,
   },
   {
-    id:        'tx_003',
-    type:      'swap',
-    asset:     'BTC→ETH',
-    amount:    2.5,
-    usd:       164553.50,
-    from:      DEMO_ADDRESS,
-    to:        '0xUniswapRouter',
-    hash:      '0x112233aabbccdd',
+    id: 'tx_003',
+    type: 'swap',
+    asset: 'BTC→ETH',
+    amount: 2.5,
+    usd: 164553.50,
+    from: DEMO_ADDRESS,
+    to: '0xUniswapRouter',
+    hash: '0x112233aabbccdd',
     timestamp: Date.now() - 1296000000,
-    status:    'confirmed',
-    gas:       0.0054,
+    status: 'confirmed',
+    gas: 0.0054,
   },
   {
-    id:        'tx_004',
-    type:      'receive',
-    asset:     'LINK',
-    amount:    10000,
-    usd:       147200,
-    from:      '0x5cF1…a2E8',
-    to:        DEMO_ADDRESS,
-    hash:      '0x998877665544aaa',
+    id: 'tx_004',
+    type: 'receive',
+    asset: 'LINK',
+    amount: 10000,
+    usd: 147200,
+    from: '0x5cF1…a2E8',
+    to: DEMO_ADDRESS,
+    hash: '0x998877665544aaa',
     timestamp: Date.now() - 1382400000,
-    status:    'confirmed',
-    gas:       0.0015,
+    status: 'confirmed',
+    gas: 0.0015,
   },
   {
-    id:        'tx_005',
-    type:      'send',
-    asset:     'ETH',
-    amount:    50.0,
-    usd:       177411.00,
-    from:      DEMO_ADDRESS,
-    to:        '0x3dB5…e7F2',
-    hash:      '0xffeeddccbbaa9988',
+    id: 'tx_005',
+    type: 'send',
+    asset: 'ETH',
+    amount: 50.0,
+    usd: 177411.00,
+    from: DEMO_ADDRESS,
+    to: '0x3dB5…e7F2',
+    hash: '0xffeeddccbbaa9988',
     timestamp: Date.now() - 1468800000,
-    status:    'confirmed',
-    gas:       0.0021,
+    status: 'confirmed',
+    gas: 0.0021,
   },
   {
-    id:        'tx_006',
-    type:      'receive',
-    asset:     'BTC',
-    amount:    10.25,
-    usd:       674669.35,
-    from:      '0x8aA0…c6D3',
-    to:        DEMO_ADDRESS,
-    hash:      '0x1122334455667788',
+    id: 'tx_006',
+    type: 'receive',
+    asset: 'BTC',
+    amount: 10.25,
+    usd: 674669.35,
+    from: '0x8aA0…c6D3',
+    to: DEMO_ADDRESS,
+    hash: '0x1122334455667788',
     timestamp: Date.now() - 1555200000,
-    status:    'confirmed',
-    gas:       0.0019,
+    status: 'confirmed',
+    gas: 0.0019,
   },
   {
-    id:        'tx_007',
-    type:      'send',
-    asset:     'USDC',
-    amount:    250000,
-    usd:       250025.00,
-    from:      DEMO_ADDRESS,
-    to:        '0x2eC4…f8B9',
-    hash:      '0xaabbccddeeff1122',
+    id: 'tx_007',
+    type: 'send',
+    asset: 'USDC',
+    amount: 250000,
+    usd: 250025.00,
+    from: DEMO_ADDRESS,
+    to: '0x2eC4…f8B9',
+    hash: '0xaabbccddeeff1122',
     timestamp: Date.now() - 1641600000,
-    status:    'confirmed',
-    gas:       0.0022,
+    status: 'confirmed',
+    gas: 0.0022,
   },
   {
-    id:        'tx_008',
-    type:      'swap',
-    asset:     'UNI→USDC',
-    amount:    50000,
-    usd:       445500.00,
-    from:      DEMO_ADDRESS,
-    to:        '0xUniswapRouter',
-    hash:      '0x99aabbccddeeff33',
+    id: 'tx_008',
+    type: 'swap',
+    asset: 'UNI→USDC',
+    amount: 50000,
+    usd: 445500.00,
+    from: DEMO_ADDRESS,
+    to: '0xUniswapRouter',
+    hash: '0x99aabbccddeeff33',
     timestamp: Date.now() - 1728000000,
-    status:    'confirmed',
-    gas:       0.0048,
+    status: 'confirmed',
+    gas: 0.0048,
   },
   {
-    id:        'tx_009',
-    type:      'receive',
-    asset:     'ETH',
-    amount:    500.0,
-    usd:       1774110.00,
-    from:      '0x7bD2…a1E5',
-    to:        DEMO_ADDRESS,
-    hash:      '0x44556677889900aa',
+    id: 'tx_009',
+    type: 'receive',
+    asset: 'ETH',
+    amount: 500.0,
+    usd: 1774110.00,
+    from: '0x7bD2…a1E5',
+    to: DEMO_ADDRESS,
+    hash: '0x44556677889900aa',
     timestamp: Date.now() - 1814400000,
-    status:    'confirmed',
-    gas:       0.0021,
+    status: 'confirmed',
+    gas: 0.0021,
   },
   {
-    id:        'tx_010',
-    type:      'send',
-    asset:     'ETH',
-    amount:    100.0,
-    usd:       354822.00,
-    from:      DEMO_ADDRESS,
-    to:        '0x6aC3…b9D4',
-    hash:      '0xbbccddee1234ffaa',
+    id: 'tx_010',
+    type: 'send',
+    asset: 'ETH',
+    amount: 100.0,
+    usd: 354822.00,
+    from: DEMO_ADDRESS,
+    to: '0x6aC3…b9D4',
+    hash: '0xbbccddee1234ffaa',
     timestamp: Date.now() - 1900800000,
-    status:    'confirmed',
-    gas:       0.0021,
+    status: 'confirmed',
+    gas: 0.0021,
   },
 ];
 
@@ -264,12 +264,12 @@ const MOCK_TRANSACTIONS = [
    ===================================================== */
 
 const WalletState = {
-  address:     null,
-  provider:    null,
-  signer:      null,
-  isMetaMask:  false,
-  ethBalance:  null,
-  gasPrice:    null,
+  address: null,
+  provider: null,
+  signer: null,
+  isMetaMask: false,
+  ethBalance: null,
+  gasPrice: null,
   generatedWallet: null,
 };
 
@@ -284,7 +284,7 @@ function shortAddress(addr) {
 
 function formatUSD(n) {
   return new Intl.NumberFormat('en-US', {
-    style:    'currency',
+    style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -301,10 +301,10 @@ function formatNumber(n, decimals = 4) {
 function formatTimeAgo(ts) {
   const diff = Date.now() - ts;
   const mins = Math.floor(diff / 60000);
-  if (mins < 1)  return 'Just now';
+  if (mins < 1) return 'Just now';
   if (mins < 60) return `${mins}m ago`;
   const hrs = Math.floor(mins / 60);
-  if (hrs < 24)  return `${hrs}h ago`;
+  if (hrs < 24) return `${hrs}h ago`;
   const days = Math.floor(hrs / 24);
   return `${days}d ago`;
 }
@@ -327,8 +327,8 @@ async function generateNewWallet() {
   const wallet = ethers.Wallet.createRandom();
   WalletState.generatedWallet = wallet;
   return {
-    address:    wallet.address,
-    mnemonic:   wallet.mnemonic.phrase,
+    address: wallet.address,
+    mnemonic: wallet.mnemonic.phrase,
     privateKey: wallet.privateKey,
   };
 }
@@ -347,7 +347,7 @@ async function fetchETHBalance(address) {
       const bal = await WalletState.provider.getBalance(address);
       return parseFloat(ethers.formatEther(bal));
     }
-  } catch (_) {}
+  } catch (_) { }
   // Fall back to mock balance
   return TOKEN_DATA.find(t => t.symbol === 'ETH')?.balance || 0;
 }
@@ -362,7 +362,7 @@ async function fetchGasPrice() {
         return gwei;
       }
     }
-  } catch (_) {}
+  } catch (_) { }
   // Fallback mock gas (randomised)
   const mock = 18 + Math.random() * 12;
   WalletState.gasPrice = mock;
@@ -372,9 +372,9 @@ async function fetchGasPrice() {
 async function estimateGasFee(toAddress, amountEth) {
   const gwei = WalletState.gasPrice || await fetchGasPrice();
   const gasLimit = 21000; // standard ETH transfer; ERC-20 ~65000
-  const ethFee   = (gwei * gasLimit) / 1e9;
+  const ethFee = (gwei * gasLimit) / 1e9;
   const ethPrice = TOKEN_DATA.find(t => t.symbol === 'ETH')?.price || 3548;
-  const usdFee   = ethFee * ethPrice;
+  const usdFee = ethFee * ethPrice;
   return { gwei, gasLimit, ethFee, usdFee };
 }
 
@@ -416,12 +416,12 @@ function generateQRCode(address) {
     return;
   }
   new QRCode(container, {
-    text:          `ethereum:${address}`,
-    width:         176,
-    height:        176,
-    colorDark:     '#000000',
-    colorLight:    '#ffffff',
-    correctLevel:  QRCode.CorrectLevel.H,
+    text: `ethereum:${address}`,
+    width: 176,
+    height: 176,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H,
   });
 }
 
@@ -438,7 +438,7 @@ function renderTokenList() {
   TOKEN_DATA.forEach(token => {
     const usdValue = token.balance * token.price;
     const changeClass = token.change24h >= 0 ? 'pos' : 'neg';
-    const changeSign  = token.change24h >= 0 ? '+' : '';
+    const changeSign = token.change24h >= 0 ? '+' : '';
 
     const item = document.createElement('div');
     item.className = 'token-item';
@@ -475,11 +475,11 @@ function renderTransactions(containerId, transactions, limit) {
 
   list.forEach(tx => {
     const typeLabel = tx.type === 'receive' ? 'Received' : tx.type === 'send' ? 'Sent' : 'Swapped';
-    const typeIcon  = tx.type === 'receive'
+    const typeIcon = tx.type === 'receive'
       ? '<i class="fa-solid fa-arrow-down"></i>'
       : tx.type === 'send'
-      ? '<i class="fa-solid fa-arrow-up"></i>'
-      : '<i class="fa-solid fa-arrow-right-arrow-left"></i>';
+        ? '<i class="fa-solid fa-arrow-up"></i>'
+        : '<i class="fa-solid fa-arrow-right-arrow-left"></i>';
 
     const amountPrefix = tx.type === 'send' ? '-' : tx.type === 'receive' ? '+' : '';
 
@@ -508,13 +508,13 @@ function renderTransactions(containerId, transactions, limit) {
 /** Update gas display in real time */
 async function updateGasDisplay() {
   const price = await fetchGasPrice();
-  const el    = document.getElementById('gas-price');
+  const el = document.getElementById('gas-price');
   const label = document.getElementById('gas-label');
   if (el) el.textContent = `${price.toFixed(1)} Gwei`;
   if (label) {
     const speed = price < 20 ? 'Low · ~30s' : price < 40 ? 'Standard · ~15s' : 'High · ~5s';
     label.textContent = speed;
-    label.className   = `stat-sub ${price < 20 ? 'positive' : price < 40 ? 'neutral' : 'negative'}`;
+    label.className = `stat-sub ${price < 20 ? 'positive' : price < 40 ? 'neutral' : 'negative'}`;
   }
 }
 
