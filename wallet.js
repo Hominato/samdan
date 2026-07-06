@@ -76,6 +76,32 @@ const TOKEN_DATA = [
 /** Mock transaction history */
 const MOCK_TRANSACTIONS = [
   {
+    id:        'tx_new2',
+    type:      'receive',
+    asset:     'USDC',
+    amount:    1000,
+    usd:       1000.00,
+    from:      '0x3dC9…b2F7',
+    to:        DEMO_ADDRESS,
+    hash:      '0xe7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2',
+    timestamp: new Date('2026-07-06T12:00:00Z').getTime(),
+    status:    'confirmed',
+    gas:       0.0011,
+  },
+  {
+    id:        'tx_new1',
+    type:      'receive',
+    asset:     'USDC',
+    amount:    4000,
+    usd:       4000.00,
+    from:      '0x7aB1…e3C4',
+    to:        DEMO_ADDRESS,
+    hash:      '0xd4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9',
+    timestamp: new Date('2026-07-05T19:30:00Z').getTime(),
+    status:    'confirmed',
+    gas:       0.0013,
+  },
+  {
     id:        'tx_new',
     type:      'receive',
     asset:     'USDC',
